@@ -1,0 +1,32 @@
+data:
+  train_path: "/home/jovyan/image_tt/data/image_train.parquet"
+  val_path: "/home/jovyan/image_tt/data/image_val.parquet"
+  invalid_tcin: [88992305, 90471880]
+
+model:
+  model_class: "clip_tt_mlp_fusion"
+  clip_model_name: "ViT-B-32"
+  pretrained: "openai"
+  normalize: True
+  in_batch_negative_sampling_strategy: "weighted_sampling"
+  checkpoint_path: "/home/jovyan/image_tt/checkpoints/clip_align_image/clip_align_image_1.pt"
+  share_text_encoder: True
+  freeze_query_text: True
+  freeze_item_text: True
+  freeze_item_image: True
+  unlock_layers: 2
+
+training:
+  epochs: 6
+  batch_size: 512
+  ddp_world_size: 1
+  ddp_rank: 0
+  lr: 2e-5
+  weight_decay: 1e-4
+  num_warmup_steps: 200
+  save_dir: "/home/jovyan/clip/clip_tt/checkpoints/mlp_fusion_unfreeze_2"
+  save_model_name: "mlp_fusion_unfreeze_2"
+
+logging:
+  log_dir: "/home/jovyan/clip/clip_tt/logging"
+  log_name: "mlp_fusion_unfreeze_2"
